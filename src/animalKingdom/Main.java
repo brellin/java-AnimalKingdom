@@ -1,8 +1,25 @@
 package animalKingdom;
 
+import java.lang.invoke.LambdaConversionException;
+import java.lang.invoke.LambdaMetafactory;
 import java.util.ArrayList;
+import java.util.Comparator;
+
+interface Checker {
+    boolean test(Animal animal);
+}
 
 public class Main {
+
+    public static void printAnimal(ArrayList<Animal> animals, String sortName, boolean bool) {
+        System.out.println("\n========= " + sortName + " =========\n");
+        if (bool) {
+            animals.forEach(animal -> System.out.println(animal.move()));
+        } else {
+            animals.forEach(animal -> System.out.println("Animal Name: " + animal.getName() + "\n" + "Year Discovered: "
+                    + animal.getYearDiscovered() + "\n"));
+        }
+    }
 
     public static void animalFilter(ArrayList<Animal> animals, Checker check, String checkName) {
         System.out.println("\n========= " + checkName + " =========\n");
@@ -39,20 +56,22 @@ public class Main {
         animals.add(new Bird("Parrot", 1824));
         animals.add(new Bird("Swan", 1758));
 
-        System.out.println("\n========= Original ===========\n\n" + animals);
+        printAnimal(animals, "Original", false);
 
         // Descending Year Discovered
-        animals.sort((one, two) -> one.getYearDiscovered() - two.getYearDiscovered());
-        System.out.println("\n========== Descending Year Discovered ==========\n\n" + animals);
+        ArrayList<Animal> yearSort = new ArrayList<>(animals);
+        yearSort.sort((one, two) -> two.getYearDiscovered() - one.getYearDiscovered());
+        printAnimal(yearSort, "Descending Year Discovered", false);
 
         // Alphabetize
-        animals.sort((one, two) -> one.getName().compareTo(two.getName()));
-        System.out.println("\n========== Alphabetical ==========\n" + animals);
+        ArrayList<Animal> nameSort = new ArrayList<>(animals);
+        nameSort.sort((one, two) -> one.getName().compareTo(two.getName()));
+        printAnimal(nameSort, "Alphabetized", false);
 
         // Sort by Movement Type
-        animals.sort((one, two) -> one.breathe().compareTo(two.breathe()));
-        System.out.println("\n========== Sort by Movement ==========\n\n");
-        animals.forEach(Animal -> System.out.println(Animal.move()));
+        ArrayList<Animal> moveSort = new ArrayList<>(animals);
+        moveSort.sort((one, two) -> one.move().split(" ")[1].compareTo(two.move().split(" ")[1]));
+        printAnimal(moveSort, "Sort By Movement", true);
 
         // Only those that breathe with lungs
         animalFilter(animals, animal -> animal.breathe().contains("lungs"), "Filter by Lungs");

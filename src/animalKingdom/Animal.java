@@ -49,9 +49,4 @@ public abstract class Animal {
 
     public abstract String reproduce();
 
-    @Override
-    public String toString() {
-        return "\nAnimal Name: " + getName() + "\n" + "Year Discovered: " + getYearDiscovered();
-    }
-
 }
