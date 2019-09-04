@@ -1,8 +1,18 @@
 package animalKingdom;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class Main {
+
+    public static void animalFilter(ArrayList<Animal> animals, Checker check, String checkName) {
+        System.out.println("\n========= " + checkName + " =========\n");
+        for (Animal one : animals) {
+            if (check.test(one)) {
+                System.out.println(one.getName() + "\n" + one.move() + "\n" + one.breathe() + "\n" + one.reproduce()
+                        + "\n" + one.getYearDiscovered() + "\n");
+            }
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -29,69 +39,37 @@ public class Main {
         animals.add(new Bird("Parrot", 1824));
         animals.add(new Bird("Swan", 1758));
 
-        System.out.println("\n========= Original ===========\n" + animals + "\n\n==============================\n");
+        System.out.println("\n========= Original ===========\n\n" + animals);
 
         // Descending Year Discovered
-        Collections.sort(animals, (first, second) -> second.yearDiscovered - first.yearDiscovered);
-        System.out.println("\n========== Descending Year Discovered ==========\n" + animals
-                + "\n\n================================================\n");
+        animals.sort((one, two) -> one.getYearDiscovered() - two.getYearDiscovered());
+        System.out.println("\n========== Descending Year Discovered ==========\n\n" + animals);
 
         // Alphabetize
-        Collections.sort(animals, (first, second) -> first.name.compareToIgnoreCase(second.name));
-        System.out.println(
-                "\n========== Alphabetical ==========\n" + animals + "\n\n==================================\n");
+        animals.sort((one, two) -> one.getName().compareTo(two.getName()));
+        System.out.println("\n========== Alphabetical ==========\n" + animals);
 
         // Sort by Movement Type
-        System.out.println("\n========== Sort by Movement ==========\n");
-        Collections.sort(animals, (first, second) -> first.move().split(" ")[1].compareTo(second.move().split(" ")[1]));
+        animals.sort((one, two) -> one.breathe().compareTo(two.breathe()));
+        System.out.println("\n========== Sort by Movement ==========\n\n");
         animals.forEach(Animal -> System.out.println(Animal.move()));
-        System.out.println("\n======================================\n");
 
         // Only those that breathe with lungs
-        System.out.println("\n========== Filter by Lungs ==========\n");
-        animals.forEach(animal -> {
-            if (animal.breathe().contains("lungs")) {
-                System.out.println(animal.breathe());
-            }
-        });
-        System.out.println("\n=====================================\n");
+        animalFilter(animals, animal -> animal.breathe().contains("lungs"), "Filter by Lungs");
 
         // Only those that breathe with lungs and discovered in 1758
-        System.out.println("\n========== Filter by Lungs and Year Discovered ==========\n");
-        animals.forEach(animal -> {
-            if (animal.breathe().contains("lungs") && animal.yearDiscovered == 1758) {
-                System.out.println("[" + animal.breathe() + "\nYear Discovered: " + animal.yearDiscovered + "]\n");
-            }
-        });
-        System.out.println("\n=========================================================\n");
+        animalFilter(animals, animal -> animal.breathe().contains("lungs") && animal.getYearDiscovered() == 1758,
+                "Filter by Lungs and Discovered in 1758");
 
         // Only those that lay eggs and breathe with lungs
-        System.out.println("\n========== Filter by Lungs and Lay Eggs ==========\n");
-        animals.forEach(animal -> {
-            if (animal.breathe().contains("lungs") && animal.reproduce().contains("eggs")) {
-                System.out.println(animal.breathe() + "\n" + animal.reproduce() + "\n");
-            }
-        });
-        System.out.println("\n==================================================\n");
+        animalFilter(animals, animal -> animal.breathe().contains("lungs") && animal.reproduce().contains("eggs"),
+                "Filter by Lungs and Lay Eggs");
 
         // Only those discovered in 1758
-        System.out.println("\n========== Discovered in 1758 ==========\n");
-        Collections.sort(animals, (first, second) -> first.name.compareTo(second.name));
-        animals.forEach(animal -> {
-            if (animal.yearDiscovered == 1758) {
-                System.out.println("The " + animal.name + " was discovered in " + animal.yearDiscovered + ".");
-            }
-        });
-        System.out.println("\n========================================\n");
+        animalFilter(animals, animal -> animal.getYearDiscovered() == 1758, "Only Discovered in 1758");
 
         // Only mammals
-        System.out.println("\n========== Only Mammals (Stretch) ==========\n");
-        animals.forEach(animal -> {
-            if (animal instanceof Mammal) {
-                System.out.println(animal);
-            }
-        });
-        System.out.println("\n============================================\n");
+        animalFilter(animals, animal -> animal instanceof Mammal, "Is a Mammal (Stretch)");
 
     }
 
