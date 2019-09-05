@@ -3,7 +3,7 @@ package animalKingdom;
 public abstract class Animal {
 
     // fields
-    public int baseId = 0;
+    static int baseId = 0;
     private int id;
     private String name;
     private int yearDiscovered;

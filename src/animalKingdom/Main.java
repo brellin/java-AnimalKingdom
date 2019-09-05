@@ -1,9 +1,6 @@
 package animalKingdom;
 
-import java.lang.invoke.LambdaConversionException;
-import java.lang.invoke.LambdaMetafactory;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 interface Checker {
     boolean test(Animal animal);
