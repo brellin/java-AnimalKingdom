@@ -1,6 +1,7 @@
 package animalKingdom;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 interface Checker {
     boolean test(Animal animal);
@@ -8,7 +9,9 @@ interface Checker {
 
 public class Main {
 
-    public static void printAnimal(ArrayList<Animal> animals, String sortName, boolean bool) {
+    public static void printAnimal(ArrayList<Animal> animals, String sortName, boolean bool,
+            Comparator<Animal> sorter) {
+        animals.sort(sorter);
         System.out.println("\n========= " + sortName + " =========\n");
         if (bool) {
             animals.forEach(animal -> System.out.println(animal.move()));
@@ -53,22 +56,22 @@ public class Main {
         animals.add(new Bird("Parrot", 1824));
         animals.add(new Bird("Swan", 1758));
 
-        printAnimal(animals, "Original", false);
+        printAnimal(animals, "Original", false,
+                (one, two) -> two.getClass().toString().compareTo(one.getClass().toString()));
 
         // Descending Year Discovered
         ArrayList<Animal> yearSort = new ArrayList<>(animals);
-        yearSort.sort((one, two) -> two.getYearDiscovered() - one.getYearDiscovered());
-        printAnimal(yearSort, "Descending Year Discovered", false);
+        printAnimal(yearSort, "Descending Year Discovered", false,
+                (one, two) -> two.getYearDiscovered() - one.getYearDiscovered());
 
         // Alphabetize
         ArrayList<Animal> nameSort = new ArrayList<>(animals);
-        nameSort.sort((one, two) -> one.getName().compareTo(two.getName()));
-        printAnimal(nameSort, "Alphabetized", false);
+        printAnimal(nameSort, "Alphabetized", false, (one, two) -> one.getName().compareTo(two.getName()));
 
         // Sort by Movement Type
         ArrayList<Animal> moveSort = new ArrayList<>(animals);
-        moveSort.sort((one, two) -> one.move().split(" ")[1].compareTo(two.move().split(" ")[1]));
-        printAnimal(moveSort, "Sort By Movement", true);
+        printAnimal(moveSort, "Sort By Movement", true,
+                (one, two) -> one.move().split(" ")[1].compareTo(two.move().split(" ")[1]));
 
         // Only those that breathe with lungs
         animalFilter(animals, animal -> animal.breathe().contains("lungs"), "Filter by Lungs");
