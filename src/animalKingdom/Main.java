@@ -85,7 +85,7 @@ public class Main {
                 "Filter by Lungs and Lay Eggs");
 
         // Only those discovered in 1758
-        animalFilter(animals, animal -> animal.getYearDiscovered() == 1758, "Only Discovered in 1758");
+        animalFilter(nameSort, animal -> animal.getYearDiscovered() == 1758, "Only Discovered in 1758");
 
         // Only mammals
         animalFilter(animals, animal -> animal instanceof Mammal, "Is a Mammal (Stretch)");
