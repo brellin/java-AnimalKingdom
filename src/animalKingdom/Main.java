@@ -1,7 +1,6 @@
 package animalKingdom;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 
 interface Checker {
     boolean test(Animal animal);
@@ -11,6 +10,7 @@ public class Main {
 
     public static void printAnimal(ArrayList<Animal> animals, String sortName, boolean bool,
             Comparator<Animal> sorter) {
+
         animals.sort(sorter);
         System.out.println("\n========= " + sortName + " =========\n");
         if (bool) {
@@ -19,9 +19,11 @@ public class Main {
             animals.forEach(animal -> System.out.println("Animal Name: " + animal.getName() + "\n" + "Year Discovered: "
                     + animal.getYearDiscovered() + "\n"));
         }
+
     }
 
     public static void animalFilter(ArrayList<Animal> animals, Checker check, String checkName) {
+
         System.out.println("\n========= " + checkName + " =========\n");
         for (Animal one : animals) {
             if (check.test(one)) {
@@ -29,11 +31,13 @@ public class Main {
                         + "\n" + one.getYearDiscovered() + "\n");
             }
         }
+
     }
 
     public static void main(String[] args) {
 
-        ArrayList<Animal> animals = new ArrayList<Animal>();
+        // create empty arraylist to accept Animal class
+        ArrayList<Animal> animals = new ArrayList<>();
 
         // mammals
         animals.add(new Mammal("Panda", 1869));
