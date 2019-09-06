@@ -1,6 +1,16 @@
 package animalKingdom;
 
-public abstract class Animal {
+interface animalActions {
+
+    public String move();
+
+    public String breathe();
+
+    public String reproduce();
+
+}
+
+public abstract class Animal implements animalActions {
 
     // fields
     static int baseId = 0;
@@ -9,10 +19,12 @@ public abstract class Animal {
     private int yearDiscovered;
 
     public Animal(String name, int yearDiscovered) {
+
         baseId++;
         this.id = baseId;
         this.name = name;
         this.yearDiscovered = yearDiscovered;
+
     }
 
     // global methods
@@ -41,12 +53,5 @@ public abstract class Animal {
     public void setYearDiscovered(int yearDiscovered) {
         this.yearDiscovered = yearDiscovered;
     }
-
-    // abstract methods
-    public abstract String move();
-
-    public abstract String breathe();
-
-    public abstract String reproduce();
 
 }

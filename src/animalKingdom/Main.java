@@ -3,7 +3,9 @@ package animalKingdom;
 import java.util.*;
 
 interface Checker {
+
     boolean test(Animal animal);
+
 }
 
 public class Main {
